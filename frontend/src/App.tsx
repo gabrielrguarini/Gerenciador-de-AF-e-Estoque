@@ -1,35 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import {
+    Box,
+    Container,
+    TextField,
+    InputLabel,
+    Select,
+    MenuItem,
+} from "@mui/material";
+import { SelectChangeEvent } from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import TabelaDeProdutos from "./components/TabelaDeProdutos";
+import { rowInterface } from "./Interfaces";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [city, setCity] = useState("");
 
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    const handleCityChange = (event: SelectChangeEvent) => {
+        setCity(event.target.value as string);
+    };
+
+    const linhas = [
+        { name: "gabriel", quantidade: 2 },
+        { name: "Iara <3", quantidade: 3 },
+    ];
+
+    return (
+        <div className="App">
+            <Container maxWidth="lg">
+                <Box>
+                    <TextField
+                        id="AFNumber"
+                        label="Numero da AF"
+                        variant="outlined"
+                    />
+                    <FormControl>
+                        <InputLabel id="city-label">Cidade</InputLabel>
+                        <Select
+                            sx={{ minWidth: 120 }}
+                            labelId="city-label"
+                            id="city"
+                            value={city}
+                            label="Cidade"
+                            onChange={handleCityChange}
+                        >
+                            <MenuItem value={"Espera Feliz"}>
+                                Espera Feliz
+                            </MenuItem>
+                            <MenuItem value={"Carangola"}>Carangola</MenuItem>
+                            <MenuItem value={"Pedra Dourada"}>
+                                Pedra Dourada
+                            </MenuItem>
+                        </Select>
+                    </FormControl>
+                </Box>
+                <TabelaDeProdutos rows={linhas}></TabelaDeProdutos>
+            </Container>
+        </div>
+    );
 }
 
-export default App
+export default App;
