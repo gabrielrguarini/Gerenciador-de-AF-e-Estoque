@@ -1,3 +1,6 @@
 export interface rowInterface {
     name: string;
-    quantidade: number;}
+    quantidade: string;
+    custo: string;
+    custoTotal: string;
+}
