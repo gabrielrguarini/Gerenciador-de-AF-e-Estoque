@@ -1,0 +1,33 @@
+Olá! Para adicionar mais produtos a uma nota que contém uma tabela de produtos usando Prisma, você pode seguir os seguintes passos:
+
+Primeiro, você precisará recuperar a nota da tabela de notas usando o método findUnique ou findFirst do Prisma. Suponha que a nota que você deseja atualizar tenha um ID de notaId. O código abaixo recuperaria essa nota:
+
+typescript
+Copy code
+const nota = await prisma.nota.findUnique({
+  where: { id: notaId },
+  include: { produtos: true }, // Inclui a tabela de produtos
+});
+Depois de recuperar a nota, você pode adicionar um novo produto à tabela de produtos usando o método create do Prisma. Suponha que você queira adicionar um novo produto com um nome de nomeProduto e um preço de precoProduto. O código abaixo adicionaria esse novo produto à tabela de produtos da nota recuperada:
+
+typescript
+Copy code
+const novoProduto = await prisma.produto.create({
+  data: {
+    nome: nomeProduto,
+    preco: precoProduto,
+    nota: { connect: { id: nota.id } }, // Conecta o novo produto à nota recuperada
+  },
+});
+Depois de adicionar o novo produto à tabela de produtos da nota, você pode atualizar a nota para incluir o novo produto usando o método update do Prisma. O código abaixo atualizaria a nota para incluir o novo produto:
+
+typescript
+Copy code
+const notaAtualizada = await prisma.nota.update({
+  where: { id: nota.id },
+  data: {
+    produtos: [...nota.produtos, novoProduto], // Adiciona o novo produto à lista de produtos da nota
+  },
+  include: { produtos: true }, // Inclui a tabela de produtos na nota atualizada
+});
+Com esses passos, você pode adicionar um novo produto a uma nota que contém uma tabela de produtos usando Prisma. Lembre-se de substituir os valores notaId, nomeProduto e precoProduto pelos valores relevantes em seu aplicativo.

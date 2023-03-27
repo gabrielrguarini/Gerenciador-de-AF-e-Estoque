@@ -14,19 +14,30 @@ const prisma = new PrismaClient()
 async function criaNota() {
     const nota = await prisma.nota.create({
         data: {
-            numero: '002/698',
+            numero: '003/698',
             cidade: 'Espera Feliz',
+            produtos: {
+              create:[
+                {
+                  custo:1000,
+                  nome:"Processador",
+                  quantidade:10,
+                  status:"Nenhum"
+                },
+                {
+                  custo:150,
+                  nome:"Memoria",
+                  quantidade:2,
+                  status:"Nenhum"
+                }
+              ]
+            }
         },
     })
   console.log(nota)
 }
 
-async function main() {
-    const notas = await prisma.nota.findMany()
-    console.log(notas)
-  }
-  
-  main()
+  criaNota()
     .then(async () => {
       await prisma.$disconnect()
     })
