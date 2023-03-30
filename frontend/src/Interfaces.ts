@@ -3,10 +3,11 @@ export interface rowInterface {
     quantidade: string;
     custo: string;
     custoTotal: string;
+    status: "Nenhum" | "Comprar" | "Em Estoque";
 }
 export interface produtosInterface {
     name: string;
     quantidade: string;
     custo: string;
-    status: string|undefined
+    status: "Nenhum" | "Comprar" | "Em Estoque";
 }

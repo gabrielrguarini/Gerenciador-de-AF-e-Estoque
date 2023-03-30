@@ -14,7 +14,7 @@ import { SelectChangeEvent } from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { useForm } from "react-hook-form";
 import TabelaDeProdutos from "./components/TabelaDeProdutos";
-import { produtosInterface } from "./Interfaces";
+import { produtosInterface, rowInterface } from "./Interfaces";
 
 function App() {
     const [city, setCity] = useState("");
@@ -29,14 +29,27 @@ function App() {
         formState: { errors },
     } = useForm<produtosInterface>();
 
-    const addProduto = (data: produtosInterface) => {
-        console.log(data);
+    const addProduto = ({
+        name,
+        quantidade,
+        custo,
+        status,
+    }: produtosInterface) => {
+        const custoTotal = `${parseFloat(custo) * parseFloat(quantidade)}`;
+        setListaProdutos([
+            ...listaProdutos,
+            {
+                name,
+                quantidade,
+                custo,
+                status,
+                custoTotal,
+            },
+        ]);
+        console.log(listaProdutos);
     };
 
-    const listaProdutos = [
-        { name: "gabriel", quantidade: "2", custo: "100", custoTotal: "" },
-        { name: "Iara <3", quantidade: "3", custo: "100", custoTotal: "" },
-    ];
+    const [listaProdutos, setListaProdutos] = useState<rowInterface[]>([]);
 
     return (
         <div className="App">
@@ -84,80 +97,88 @@ function App() {
                             rows={listaProdutos}
                         ></TabelaDeProdutos>
                     </Grid>
-                    <form onSubmit={handleSubmit(addProduto)}>
-                        <Grid item xs={5}>
-                            <TextField
-                                size="small"
-                                fullWidth
-                                id="itemName"
-                                {...register("name")}
-                                label="Nome do Item"
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={2}>
-                            <TextField
-                                size="small"
-                                type={"number"}
-                                fullWidth
-                                id="itemQuantity"
-                                {...register("quantidade")}
-                                label="Quantidade"
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={2}>
-                            <FormControl sx={{ m: 1 }} size="small">
-                                <InputLabel htmlFor="outlined-adornment-amount">
-                                    Custo
-                                </InputLabel>
-                                <OutlinedInput
-                                    type="number"
-                                    {...register("custo")}
-                                    id="outlined-adornment-amount"
-                                    startAdornment={
-                                        <InputAdornment position="start">
-                                            $
-                                        </InputAdornment>
-                                    }
-                                    label="Custo"
+                    <Container>
+                        <form onSubmit={handleSubmit(addProduto)}>
+                            <Grid item xs={5}>
+                                <TextField
+                                    size="small"
+                                    fullWidth
+                                    id="itemName"
+                                    {...register("name")}
+                                    label="Nome do Item"
+                                    variant="outlined"
                                 />
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <FormControl margin="none" fullWidth size="small">
-                                <InputLabel id="status-label">
-                                    Status
-                                </InputLabel>
-                                <Select
-                                    {...register("status")}
-                                    sx={{ minWidth: 120 }}
-                                    value={""}
-                                    labelId="status-label"
-                                    id="status"
-                                    label="Status"
+                            </Grid>
+                            <Grid item xs={2}>
+                                <TextField
+                                    size="small"
+                                    type={"number"}
+                                    fullWidth
+                                    id="itemQuantity"
+                                    {...register("quantidade")}
+                                    label="Quantidade"
+                                    variant="outlined"
+                                />
+                            </Grid>
+                            <Grid item xs={2}>
+                                <FormControl sx={{ m: 1 }} size="small">
+                                    <InputLabel htmlFor="outlined-adornment-amount">
+                                        Custo
+                                    </InputLabel>
+                                    <OutlinedInput
+                                        type="number"
+                                        {...register("custo")}
+                                        id="outlined-adornment-amount"
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                $
+                                            </InputAdornment>
+                                        }
+                                        label="Custo"
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <FormControl
+                                    margin="none"
+                                    fullWidth
+                                    size="small"
                                 >
-                                    <MenuItem value={""}>Nenhum</MenuItem>
-                                    <MenuItem value={"Comprar"}>
-                                        Comprar
-                                    </MenuItem>
-                                    <MenuItem value={"Em Estoque"}>
-                                        Em Estoque
-                                    </MenuItem>
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={1}>
-                            <Button
-                                type="submit"
-                                fullWidth
-                                size="small"
-                                variant="contained"
-                            >
-                                +
-                            </Button>
-                        </Grid>
-                    </form>
+                                    <InputLabel id="status-label">
+                                        Status
+                                    </InputLabel>
+                                    <Select
+                                        defaultValue=""
+                                        {...register("status")}
+                                        sx={{ minWidth: 120 }}
+                                        labelId="status-label"
+                                        id="status"
+                                        label="Status"
+                                    >
+                                        <MenuItem value={"Nenhum"}>
+                                            Nenhum
+                                        </MenuItem>
+                                        <MenuItem value={"Comprar"}>
+                                            Comprar
+                                        </MenuItem>
+                                        <MenuItem value={"Em Estoque"}>
+                                            Em Estoque
+                                        </MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={1}>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    size="small"
+                                    variant="contained"
+                                >
+                                    +
+                                </Button>
+                            </Grid>
+                        </form>
+                    </Container>
                 </Grid>
             </Container>
         </div>
