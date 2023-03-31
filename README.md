@@ -40,3 +40,4 @@ As seguintes ferramentas foram usadas na construção do projeto:
 -   [TypeScript](https://www.typescriptlang.org/)
 -   [React-Hook-Form](https://react-hook-form.com/)
 -   [MaterialUi](https://mui.com/)
+-   [Axios](https://axios-http.com/)
