@@ -1,13 +1,21 @@
 import { PrismaClient } from '@prisma/client'
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const PORT = 3000;
+
+app.use(cors());
+app.use(express.json());
+
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-
+app.post("/", (req, res) => {
+    console.log('funfou')
+    console.log(req.body)
+})
 
 const prisma = new PrismaClient()
 
@@ -34,7 +42,6 @@ async function criaNota() {
             }
         },
     })
-  console.log(nota)
 }
 
   criaNota()
@@ -46,6 +53,8 @@ async function criaNota() {
       await prisma.$disconnect()
       process.exit(1)
     })
+
+
 
 app.listen(PORT, () => {
     console.log(`Example app listening on PORT ${PORT}`);

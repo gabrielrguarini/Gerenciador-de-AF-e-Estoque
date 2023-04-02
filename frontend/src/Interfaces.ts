@@ -1,4 +1,5 @@
 export interface rowInterface {
+    id?: number;
     name: string;
     quantidade: string;
     custo: string;

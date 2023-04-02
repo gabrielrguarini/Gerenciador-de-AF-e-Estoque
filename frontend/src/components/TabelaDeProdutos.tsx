@@ -7,6 +7,7 @@ import {
     TableHead,
     TableRow,
 } from "@mui/material";
+import axios from "axios";
 import { rowInterface } from "../Interfaces";
 interface propsInterface {
     rows: rowInterface[];
@@ -28,7 +29,7 @@ export default function TabelaDeProdutos({ rows }: propsInterface) {
                         <TableRow
                             hover
                             role="checkbox"
-                            key={row.name}
+                            key={row.id}
                             sx={{
                                 "&:last-child td, &:last-child th": {
                                     border: 0,
