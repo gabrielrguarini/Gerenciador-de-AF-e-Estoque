@@ -13,9 +13,11 @@ import {
 import { SelectChangeEvent } from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import TabelaDeProdutos from "./components/TabelaDeProdutos";
+
 import { produtosInterface, rowInterface } from "./Interfaces";
+
+import { postList } from "./services/postList";
 
 function App() {
     const [city, setCity] = useState("");
@@ -48,10 +50,6 @@ function App() {
             },
         ]);
         console.log(listaProdutos);
-    };
-
-    const postLista = (listaProdutos: rowInterface[]) => {
-        axios.post(" http://localhost:3000/", listaProdutos);
     };
 
     const [listaProdutos, setListaProdutos] = useState<rowInterface[]>([]);
@@ -196,7 +194,7 @@ function App() {
                     fullWidth
                     size="small"
                     variant="contained"
-                    onClick={() => postLista(listaProdutos)}
+                    onClick={() => postList(listaProdutos)}
                 >
                     Enviar lista de produtos
                 </Button>
