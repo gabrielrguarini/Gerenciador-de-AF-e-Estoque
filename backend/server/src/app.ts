@@ -9,52 +9,53 @@ app.use(express.json());
 
 
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+  res.send("Hello World!");
 });
 
 app.post("/", (req, res) => {
-    console.log(res)
+  console.log(req.body)
+  res.send(req.body)
 })
 
 const prisma = new PrismaClient()
 
 async function criaNota() {
-    const nota = await prisma.nota.create({
-        data: {
-            numero: '003/698',
-            cidade: 'Espera Feliz',
-            produtos: {
-              create:[
-                {
-                  custo:1000,
-                  nome:"Processador",
-                  quantidade:10,
-                  status:"Nenhum"
-                },
-                {
-                  custo:150,
-                  nome:"Memoria",
-                  quantidade:2,
-                  status:"Nenhum"
-                }
-              ]
-            }
-        },
-    })
+  const nota = await prisma.nota.create({
+    data: {
+      numero: '003/698',
+      cidade: 'Espera Feliz',
+      produtos: {
+        create: [
+          {
+            custo: 1000,
+            nome: "Processador",
+            quantidade: 10,
+            status: "Nenhum"
+          },
+          {
+            custo: 150,
+            nome: "Memoria",
+            quantidade: 2,
+            status: "Nenhum"
+          }
+        ]
+      }
+    },
+  })
 }
 
-  criaNota()
-    .then(async () => {
-      await prisma.$disconnect()
-    })
-    .catch(async (e) => {
-      console.error(e)
-      await prisma.$disconnect()
-      process.exit(1)
-    })
+criaNota()
+  .then(async () => {
+    await prisma.$disconnect()
+  })
+  .catch(async (e) => {
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })
 
 
 
 app.listen(PORT, () => {
-    console.log(`Example app listening on PORT ${PORT}`);
+  console.log(`Example app listening on PORT ${PORT}`);
 });
