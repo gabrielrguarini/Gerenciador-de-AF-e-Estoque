@@ -12,3 +12,9 @@ export interface produtosInterface {
     custo: string;
     status: "Nenhum" | "Comprar" | "Em Estoque";
 }
+
+export interface notaInterface {
+    afNumber: string;
+    cidade: string;
+    listaProdutos: produtosInterface[]
+}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEventHandler, useState } from "react";
 import {
     Container,
     TextField,
@@ -15,14 +15,27 @@ import FormControl from "@mui/material/FormControl";
 import { useForm } from "react-hook-form";
 import TabelaDeProdutos from "./components/TabelaDeProdutos";
 
-import { produtosInterface, rowInterface } from "./Interfaces";
+import { notaInterface, produtosInterface, rowInterface } from "./Interfaces";
 
 import { postList } from "./services/postList";
 
 function App() {
-    const [city, setCity] = useState("");
-    const handleCityChange = (event: SelectChangeEvent) => {
-        setCity(event.target.value as string);
+    const [afNumber, setAfNumber] = useState("");
+    const [cidade, setcidade] = useState("");
+
+    const [nota, setNota] = useState<notaInterface>({
+        afNumber: "",
+        cidade: "",
+        listaProdutos: [],
+    });
+
+    const handlecidadeChange = (event: SelectChangeEvent) => {
+        setcidade(event.target.value as string);
+    };
+    const handleAfNumberChange = (
+        event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+    ) => {
+        setAfNumber(event.target.value as string);
     };
 
     const {
@@ -30,6 +43,17 @@ function App() {
         handleSubmit,
         formState: { errors },
     } = useForm<produtosInterface>();
+
+    const addNota = async ({
+        afNumber,
+        cidade,
+        listaProdutos,
+    }: notaInterface) => {
+        setNota(() => {
+            return { afNumber, cidade, listaProdutos };
+        });
+        console.log(nota);
+    };
 
     const addProduto = ({
         name,
@@ -70,18 +94,19 @@ function App() {
                             id="AFNumber"
                             label="Numero da AF"
                             variant="outlined"
+                            onChange={handleAfNumberChange}
                         />
                     </Grid>
                     <Grid item xs={4}>
                         <FormControl margin="none" fullWidth size="small">
-                            <InputLabel id="city-label">Cidade</InputLabel>
+                            <InputLabel id="cidade-label">Cidade</InputLabel>
                             <Select
                                 sx={{ minWidth: 120 }}
-                                labelId="city-label"
-                                id="city"
-                                value={city}
+                                labelId="cidade-label"
+                                id="cidade"
+                                value={cidade}
                                 label="Cidade"
-                                onChange={handleCityChange}
+                                onChange={handlecidadeChange}
                             >
                                 <MenuItem value={"Espera Feliz"}>
                                     Espera Feliz
@@ -194,7 +219,7 @@ function App() {
                     fullWidth
                     size="small"
                     variant="contained"
-                    onClick={() => postList(listaProdutos)}
+                    onClick={() => addNota({ afNumber, cidade, listaProdutos })}
                 >
                     Enviar lista de produtos
                 </Button>
