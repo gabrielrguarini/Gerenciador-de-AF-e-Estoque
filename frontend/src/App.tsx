@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import {
     Container,
     TextField,
@@ -17,12 +17,12 @@ import TabelaDeProdutos from "./components/TabelaDeProdutos";
 
 import { notaInterface, produtosInterface, rowInterface } from "./Interfaces";
 
-import { postList } from "./services/postList";
+import { postNota } from "./services/postNota";
 
 function App() {
     const [afNumber, setAfNumber] = useState("");
     const [cidade, setcidade] = useState("");
-
+    const [listaProdutos, setListaProdutos] = useState<rowInterface[]>([]);
     const [nota, setNota] = useState<notaInterface>({
         afNumber: "",
         cidade: "",
@@ -44,15 +44,11 @@ function App() {
         formState: { errors },
     } = useForm<produtosInterface>();
 
-    const addNota = async ({
-        afNumber,
-        cidade,
-        listaProdutos,
-    }: notaInterface) => {
+    const addNota = ({ afNumber, cidade, listaProdutos }: notaInterface) => {
         setNota(() => {
             return { afNumber, cidade, listaProdutos };
         });
-        console.log(nota);
+        postNota(nota);
     };
 
     const addProduto = ({
@@ -76,7 +72,11 @@ function App() {
         console.log(listaProdutos);
     };
 
-    const [listaProdutos, setListaProdutos] = useState<rowInterface[]>([]);
+    useEffect(() => {
+        setNota(() => {
+            return { afNumber, cidade, listaProdutos };
+        });
+    }, [listaProdutos]);
 
     return (
         <div className="App">
