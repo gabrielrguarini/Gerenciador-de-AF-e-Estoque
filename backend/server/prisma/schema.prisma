@@ -11,18 +11,18 @@ datasource db {
 }
 
 model Nota {
-  id       Int       @id @default(autoincrement())
+  id       String    @id @default(uuid())
   numero   String
   cidade   String?
   produtos Produto[]
 }
 
 model Produto {
-  id         Int    @id @default(autoincrement())
+  id         String @id @default(uuid())
   nome       String
-  quantidade Int
-  custo      Int
+  quantidade String
+  custo      String
   status     String
   nota       Nota   @relation(fields: [notaId], references: [id])
-  notaId     Int
+  notaId     String
 }

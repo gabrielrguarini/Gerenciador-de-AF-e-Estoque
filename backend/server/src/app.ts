@@ -6,7 +6,7 @@ const PORT = 3000;
 
 export interface produtosInterface {
   custo: string;
-  nome: string;
+  name: string;
   quantidade: string;
   status: "Nenhum" | "Comprar" | "Em Estoque";
 }
@@ -26,7 +26,6 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  console.log(req.body)
   criaNota(req.body)
     .then(async () => {
       await prisma.$disconnect()
@@ -43,16 +42,29 @@ app.post("/", (req, res) => {
 const prisma = new PrismaClient()
 
 async function criaNota({ afNumber, cidade, listaProdutos }: notaInterface) {
-
-  const createNota = await prisma.nota.create({
+  const notaCriada = await prisma.nota.create({ // Cria a nota e guarda ela em uma variavel.
     data: {
       numero: afNumber,
       cidade,
-      produtos: {
-        create: { ...listaProdutos }
-      }
     }
-  })
+  });
+
+
+  for (const produto of listaProdutos) { // Cria cada produto por vez e connecta ele com a nota.
+    await prisma.produto.create({
+      data: {
+        custo: produto.custo,
+        nome: produto.name,
+        quantidade: produto.quantidade,
+        status: produto.status,
+        nota: {
+          connect: {
+            id: notaCriada.id
+          }
+        }
+      }
+    });
+  }
 }
 
 
