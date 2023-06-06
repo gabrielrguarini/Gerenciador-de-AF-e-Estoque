@@ -72,5 +72,5 @@ async function criaNota({ afNumber, cidade, listaProdutos }: notaInterface) {
 
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on PORT ${PORT}`);
+  console.log(`Server running on PORT ${PORT}`);
 });
