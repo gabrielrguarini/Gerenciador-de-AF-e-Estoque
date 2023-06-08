@@ -14,7 +14,8 @@ export interface produtosInterface {
 }
 
 export interface notaInterface {
+    id?: string;
     afNumber: string;
     cidade: string;
-    listaProdutos: produtosInterface[]
+    listaProdutos?: produtosInterface[]
 }

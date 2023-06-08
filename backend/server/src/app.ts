@@ -21,8 +21,13 @@ app.use(cors());
 app.use(express.json());
 
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.get("/notas", async (req, res) => {
+  const notas = await getNotas().catch(async (error) => {
+    console.error(error)
+    await prisma.$disconnect()
+    process.exit(1)
+  })
+  res.json(notas)
 });
 
 app.post("/", (req, res) => {
@@ -30,8 +35,8 @@ app.post("/", (req, res) => {
     .then(async () => {
       await prisma.$disconnect()
     })
-    .catch(async (e) => {
-      console.error(e)
+    .catch(async (error) => {
+      console.error(error)
       await prisma.$disconnect()
       process.exit(1)
     })
@@ -40,6 +45,16 @@ app.post("/", (req, res) => {
 })
 
 const prisma = new PrismaClient()
+
+async function getNotas() {
+  try {
+    const notas = await prisma.nota.findMany()
+    return notas
+  } catch (error) {
+    console.error({ message: error })
+  }
+}
+
 
 async function criaNota({ afNumber, cidade, listaProdutos }: notaInterface) {
   const notaCriada = await prisma.nota.create({ // Cria a nota e guarda ela em uma variavel.
@@ -50,20 +65,25 @@ async function criaNota({ afNumber, cidade, listaProdutos }: notaInterface) {
   });
 
 
+
   for (const produto of listaProdutos) { // Cria cada produto por vez e connecta ele com a nota.
-    await prisma.produto.create({
-      data: {
-        custo: produto.custo,
-        nome: produto.name,
-        quantidade: produto.quantidade,
-        status: produto.status,
-        nota: {
-          connect: {
-            id: notaCriada.id
+    try {
+      await prisma.produto.create({
+        data: {
+          custo: produto.custo,
+          nome: produto.name,
+          quantidade: produto.quantidade,
+          status: produto.status,
+          nota: {
+            connect: {
+              id: notaCriada.id
+            }
           }
         }
-      }
-    });
+      });
+    } catch (error) {
+      console.error({ message: error })
+    }
   }
 }
 
