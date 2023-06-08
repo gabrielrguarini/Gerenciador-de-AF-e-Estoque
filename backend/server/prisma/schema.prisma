@@ -12,7 +12,7 @@ datasource db {
 
 model Nota {
   id       String    @id @default(uuid())
-  numero   String
+  afNumber String
   cidade   String?
   produtos Produto[]
 }

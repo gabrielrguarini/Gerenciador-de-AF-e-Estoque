@@ -59,7 +59,7 @@ async function getNotas() {
 async function criaNota({ afNumber, cidade, listaProdutos }: notaInterface) {
   const notaCriada = await prisma.nota.create({ // Cria a nota e guarda ela em uma variavel.
     data: {
-      numero: afNumber,
+      afNumber: afNumber,
       cidade,
     }
   });
