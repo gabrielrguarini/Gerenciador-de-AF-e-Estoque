@@ -21,7 +21,8 @@ import { postNota } from "../services/postNota";
 
 function CadastroNota() {
     const [afNumber, setAfNumber] = useState("");
-    const [cidade, setcidade] = useState("");
+    const [cidade, setCidade] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const [listaProdutos, setListaProdutos] = useState<rowInterface[]>([]);
     const [nota, setNota] = useState<notaInterface>({
         afNumber: "",
@@ -30,7 +31,7 @@ function CadastroNota() {
     });
 
     const handlecidadeChange = (event: SelectChangeEvent) => {
-        setcidade(event.target.value as string);
+        setCidade(event.target.value as string);
     };
     const handleAfNumberChange = (
         event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -44,11 +45,23 @@ function CadastroNota() {
         formState: { errors },
     } = useForm<produtosInterface>();
 
-    const addNota = ({ afNumber, cidade, listaProdutos }: notaInterface) => {
+    const addNota = async ({
+        afNumber,
+        cidade,
+        listaProdutos,
+    }: notaInterface) => {
+        setIsLoading(true);
         setNota(() => {
             return { afNumber, cidade, listaProdutos };
         });
-        postNota(nota);
+        try {
+            const data = await postNota(nota);
+            return data;
+        } catch (error) {
+            console.log({ message: error });
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const addProduto = ({
@@ -219,8 +232,9 @@ function CadastroNota() {
                     size="small"
                     variant="contained"
                     onClick={() => addNota({ afNumber, cidade, listaProdutos })}
+                    disabled={isLoading}
                 >
-                    Enviar lista de produtos
+                    {isLoading ? "Enviando..." : "Enviar lista de produtos"}
                 </Button>
             </Container>
         </div>

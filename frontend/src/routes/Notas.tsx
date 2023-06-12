@@ -13,12 +13,12 @@ function Notas() {
             setIsLoading(true);
             try {
                 const response = await axios("http://localhost:3000/notas");
-                const data = response.data;
-                setNotas(data);
+                setNotas(response.data);
             } catch (error) {
                 console.error(error);
+            } finally {
+                setIsLoading(false);
             }
-            setIsLoading(false);
         }
         fetchData();
     }, []);
@@ -43,14 +43,6 @@ function Notas() {
                 <div style={{ height: 300, width: "100%" }}>
                     <DataGrid rows={rows} columns={columns} />
                 </div>
-                // <table>
-                //     {notas.map((nota) => (
-                //         <tr key={nota.id}>
-                //             <td>Cidade: {nota.cidade}</td>
-                //             <td>Numero: {nota.afNumber}</td>
-                //         </tr>
-                //     ))}
-                // </table>
             )}
         </div>
     );
