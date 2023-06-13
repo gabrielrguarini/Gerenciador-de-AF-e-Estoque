@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CadastroNota from "./routes/CadastroNota";
 import Notas from "./routes/Notas";
 import ErrorPage from "./routes/ErrorPage";
+import Produtos from "./routes/Produtos";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
             {
                 path: "/notas",
                 element: <Notas />,
+            },
+            {
+                path: "/produtos",
+                element: <Produtos />,
             },
         ],
     },

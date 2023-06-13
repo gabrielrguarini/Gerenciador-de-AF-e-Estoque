@@ -19,3 +19,11 @@ export interface notaInterface {
     cidade: string;
     listaProdutos?: produtosInterface[]
 }
+export interface produtoInterface {
+    id: string,
+    nome: string,
+    quantidade: string,
+    custo: string,
+    status: string,
+    notaId: string
+}
