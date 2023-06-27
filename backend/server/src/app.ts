@@ -29,6 +29,14 @@ app.get("/notas", async (req, res) => {
   })
   res.json(notas)
 });
+app.get("/notas/:notaId", async (req, res) => {
+  const nota = await getNota(req.params.notaId).catch(async (error) => {
+    console.error(error)
+    await prisma.$disconnect()
+    process.exit(1)
+  })
+  res.json(nota)
+});
 
 app.get("/produtos", async (req, res) => {
   const produtos = await getProdutos().catch(async (error) => {
@@ -59,6 +67,18 @@ async function getNotas() {
   try {
     const notas = await prisma.nota.findMany()
     return notas
+  } catch (error) {
+    console.error({ message: error })
+  }
+}
+async function getNota(id) {
+  try {
+    const nota = await prisma.nota.findUnique({
+      where: {
+        id
+      }
+    })
+    return nota
   } catch (error) {
     console.error({ message: error })
   }

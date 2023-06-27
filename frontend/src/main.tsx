@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import CadastroNota from "./routes/CadastroNota";
 import Notas from "./routes/Notas";
+import Nota from "./routes/Nota";
 import ErrorPage from "./routes/ErrorPage";
 import Produtos from "./routes/Produtos";
 
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
             {
                 path: "/produtos",
                 element: <Produtos />,
+            },
+            {
+                path: "notas/:notaId",
+                element: <Nota />,
             },
         ],
     },
