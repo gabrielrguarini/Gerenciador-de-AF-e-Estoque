@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { notaInterface } from "../Interfaces";
 
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
+import { useNavigate } from "react-router-dom";
 
 function Notas() {
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [notas, setNotas] = useState<notaInterface[]>([]);
 
@@ -41,7 +43,13 @@ function Notas() {
                 <p>Loading...</p>
             ) : (
                 <div style={{ height: 300, width: "100%" }}>
-                    <DataGrid rows={rows} columns={columns} />
+                    <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        onRowClick={(rowData) =>
+                            navigate(`/notas/${rowData.id}`)
+                        }
+                    />
                 </div>
             )}
         </div>

@@ -76,7 +76,11 @@ async function getNota(id) {
     const nota = await prisma.nota.findUnique({
       where: {
         id
+      },
+      include: {
+        produtos: true
       }
+
     })
     return nota
   } catch (error) {
