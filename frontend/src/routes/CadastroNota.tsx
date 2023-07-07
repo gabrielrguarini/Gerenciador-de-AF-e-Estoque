@@ -15,7 +15,7 @@ import FormControl from "@mui/material/FormControl";
 import { useForm } from "react-hook-form";
 import TabelaDeProdutos from "../components/TabelaDeProdutos";
 
-import { notaInterface, produtosInterface, rowInterface } from "../Interfaces";
+import { notaInterface, produtoInterface } from "../Interfaces";
 
 import { postNota } from "../services/postNota";
 
@@ -23,11 +23,11 @@ function CadastroNota() {
     const [afNumber, setAfNumber] = useState("");
     const [cidade, setCidade] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [listaProdutos, setListaProdutos] = useState<rowInterface[]>([]);
+    const [produtos, setprodutos] = useState<produtoInterface[]>([]);
     const [nota, setNota] = useState<notaInterface>({
         afNumber: "",
         cidade: "",
-        listaProdutos: [],
+        produtos: [],
     });
 
     const handlecidadeChange = (event: SelectChangeEvent) => {
@@ -43,16 +43,12 @@ function CadastroNota() {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<produtosInterface>();
+    } = useForm<produtoInterface>();
 
-    const addNota = async ({
-        afNumber,
-        cidade,
-        listaProdutos,
-    }: notaInterface) => {
+    const addNota = async ({ afNumber, cidade, produtos }: notaInterface) => {
         setIsLoading(true);
         setNota(() => {
-            return { afNumber, cidade, listaProdutos };
+            return { afNumber, cidade, produtos };
         });
         try {
             const data = await postNota(nota);
@@ -65,30 +61,29 @@ function CadastroNota() {
     };
 
     const addProduto = ({
-        name,
+        nome,
         quantidade,
         custo,
         status,
-    }: produtosInterface) => {
+    }: produtoInterface) => {
         const custoTotal = `${parseFloat(custo) * parseFloat(quantidade)}`;
-        setListaProdutos([
-            ...listaProdutos,
+        setprodutos([
+            ...produtos,
             {
-                id: listaProdutos.length,
-                name,
+                id: `{produtos.length}`,
+                nome,
                 quantidade,
                 custo,
                 status,
-                custoTotal,
             },
         ]);
     };
 
     useEffect(() => {
         setNota(() => {
-            return { afNumber, cidade, listaProdutos };
+            return { afNumber, cidade, produtos };
         });
-    }, [listaProdutos]);
+    }, [produtos]);
 
     return (
         <div className="CadastroNota">
@@ -133,9 +128,7 @@ function CadastroNota() {
                         </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                        <TabelaDeProdutos
-                            rows={listaProdutos}
-                        ></TabelaDeProdutos>
+                        <TabelaDeProdutos rows={produtos}></TabelaDeProdutos>
                     </Grid>
                     <Container disableGutters>
                         <form onSubmit={handleSubmit(addProduto)}>
@@ -149,7 +142,7 @@ function CadastroNota() {
                                         size="small"
                                         fullWidth
                                         id="itemName"
-                                        {...register("name")}
+                                        {...register("nome")}
                                         label="Nome do Item"
                                         variant="outlined"
                                     />
@@ -231,7 +224,7 @@ function CadastroNota() {
                     fullWidth
                     size="small"
                     variant="contained"
-                    onClick={() => addNota({ afNumber, cidade, listaProdutos })}
+                    onClick={() => addNota({ afNumber, cidade, produtos })}
                     disabled={isLoading}
                 >
                     {isLoading ? "Enviando..." : "Enviar lista de produtos"}

@@ -45,6 +45,7 @@ function Notas() {
                     <DataGrid
                         rows={rows}
                         columns={columns}
+                        rowHeight={30}
                         onRowClick={(rowData) =>
                             navigate(`/notas/${rowData.id}`)
                         }

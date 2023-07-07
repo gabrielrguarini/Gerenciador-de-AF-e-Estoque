@@ -8,9 +8,9 @@ import {
     TableRow,
 } from "@mui/material";
 import axios from "axios";
-import { rowInterface } from "../Interfaces";
+import { produtoInterface } from "../Interfaces";
 interface propsInterface {
-    rows: rowInterface[];
+    rows: produtoInterface[];
 }
 export default function TabelaDeProdutos({ rows }: propsInterface) {
     return (
@@ -37,7 +37,7 @@ export default function TabelaDeProdutos({ rows }: propsInterface) {
                             }}
                         >
                             <TableCell component="th" scope="row">
-                                {row.name}
+                                {row.nome}
                             </TableCell>
                             <TableCell component="th" align="right">
                                 {row.quantidade}
@@ -46,7 +46,8 @@ export default function TabelaDeProdutos({ rows }: propsInterface) {
                                 {row.custo}
                             </TableCell>
                             <TableCell component="th" align="right">
-                                {row.custoTotal}
+                                {parseFloat(row.custo) *
+                                    parseFloat(row.quantidade)}
                             </TableCell>
                         </TableRow>
                     ))}
