@@ -6,18 +6,12 @@ export interface rowInterface {
     custoTotal: string;
     status: "Nenhum" | "Comprar" | "Em Estoque";
 }
-export interface produtosInterface {
-    name: string;
-    quantidade: string;
-    custo: string;
-    status: "Nenhum" | "Comprar" | "Em Estoque";
-}
 
 export interface notaInterface {
     id?: string;
     afNumber: string;
     cidade: string;
-    listaProdutos?: produtosInterface[]
+    listaProdutos: produtoInterface[]
 }
 export interface produtoInterface {
     id: string,
@@ -27,3 +21,4 @@ export interface produtoInterface {
     status: string,
     notaId: string
 }
+

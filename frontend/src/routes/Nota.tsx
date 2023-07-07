@@ -1,16 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./Nota.css";
+import { notaInterface } from "../Interfaces";
+import TabelaNota from "../components/TabelaNota";
 
 function Nota() {
-    const [nota, setNota] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
+    const [nota, setNota] = useState<notaInterface | undefined>();
+    const [isLoading, setIsLoading] = useState(true);
     const { notaId } = useParams();
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
             try {
-                console.log("Entrou no TRY");
                 const response = await axios(
                     `http://localhost:3000/notas/${notaId}`
                 );
@@ -24,10 +26,27 @@ function Nota() {
         fetchData();
     }, []);
     return (
-        <>
-            <h1>{notaId}</h1>
-            <h3>{JSON.stringify(nota)}</h3>
-        </>
+        nota && (
+            <div className="nota-container">
+                <header className="nota-header">
+                    <h1>Ordem de fornecimento</h1>
+                    <div className="nota-info">
+                        <p>Cidade: {nota.cidade}</p>
+                        <p>Nota: {nota.afNumber}</p>
+                    </div>
+                </header>
+                {isLoading ? (
+                    <div>Carregando...</div>
+                ) : (
+                    <TabelaNota
+                        cidade={nota.cidade}
+                        afNumber={nota.afNumber}
+                        listaProdutos={nota.listaProdutos}
+                    />
+                )}
+                <footer className="nota-footer">{JSON.stringify(nota)}</footer>
+            </div>
+        )
     );
 }
 export default Nota;

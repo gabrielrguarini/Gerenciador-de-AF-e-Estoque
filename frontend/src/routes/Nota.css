@@ -1,0 +1,36 @@
+.nota-container {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    width: 100vw;
+    margin: auto;
+}
+
+.nota-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.nota-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.nota-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.nota-table th,
+.nota-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.nota-footer {
+    text-align: right;
+    margin-top: 20px;
+}
