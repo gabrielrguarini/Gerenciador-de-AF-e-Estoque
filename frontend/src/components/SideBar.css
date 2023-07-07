@@ -1,0 +1,28 @@
+.sidebar {
+    font-family: "Poppins", sans-serif;
+    background-color: steelblue;
+    width: 15.625rem;
+    padding: 0.85rem;
+}
+.logo {
+    display: flex;
+    font-size: 0.6rem;
+    font-weight: 600;
+}
+.navbar {
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    gap: 8px;
+    padding-left: 20px;
+}
+.navbar-item {
+    display: flex;
+    align-content: center;
+    gap: 12px;
+    cursor: pointer;
+}
+svg {
+    align-self: center;
+}

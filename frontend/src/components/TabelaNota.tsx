@@ -1,11 +1,11 @@
 import React from "react";
 import { notaInterface } from "../Interfaces";
 
-function TabelaNota({ listaProdutos }: notaInterface) {
+function TabelaNota({ produtos }: notaInterface) {
     return (
         <>
-            {!listaProdutos && <h1>Não tem lista</h1>}
-            {listaProdutos && (
+            {!produtos && <h1>Não tem lista</h1>}
+            {produtos && (
                 <table className="nota-table">
                     <thead>
                         <tr>
@@ -16,7 +16,7 @@ function TabelaNota({ listaProdutos }: notaInterface) {
                         </tr>
                     </thead>
                     <tbody>
-                        {listaProdutos?.map((produto) => (
+                        {produtos?.map((produto) => (
                             <tr key={produto.id}>
                                 <td>{produto.nome}</td>
                                 <td>{produto.quantidade}</td>
@@ -32,7 +32,6 @@ function TabelaNota({ listaProdutos }: notaInterface) {
                     </tbody>
                 </table>
             )}
-            {<h1>{JSON.stringify(listaProdutos)}</h1>}
         </>
     );
 }

@@ -9,9 +9,9 @@ export interface rowInterface {
 
 export interface notaInterface {
     id?: string;
-    afNumber: string;
-    cidade: string;
-    listaProdutos: produtoInterface[]
+    afNumber?: string;
+    cidade?: string;
+    produtos: produtoInterface[]
 }
 export interface produtoInterface {
     id: string,

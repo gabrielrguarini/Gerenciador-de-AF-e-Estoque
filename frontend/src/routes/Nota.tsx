@@ -38,13 +38,11 @@ function Nota() {
                 {isLoading ? (
                     <div>Carregando...</div>
                 ) : (
-                    <TabelaNota
-                        cidade={nota.cidade}
-                        afNumber={nota.afNumber}
-                        listaProdutos={nota.listaProdutos}
-                    />
+                    <TabelaNota produtos={nota.produtos} />
                 )}
-                <footer className="nota-footer">{JSON.stringify(nota)}</footer>
+                <footer className="nota-footer">
+                    Total de: {nota.produtos.length} produtos
+                </footer>
             </div>
         )
     );

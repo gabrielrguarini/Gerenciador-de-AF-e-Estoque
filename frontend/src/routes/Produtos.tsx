@@ -27,16 +27,19 @@ function Produtos() {
     const rows: GridRowsProp = produtos.map((produto) => {
         return {
             id: produto.id,
-            col1: produto.nome,
-            col2: `${parseFloat(produto.quantidade).toLocaleString("pt-BR", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-            })}`,
-            col3: `${parseFloat(produto.custo).toLocaleString("pt-br", {
+            nome: produto.nome,
+            quantidade: `${parseFloat(produto.quantidade).toLocaleString(
+                "pt-BR",
+                {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                }
+            )}`,
+            custo: `${parseFloat(produto.custo).toLocaleString("pt-br", {
                 style: "currency",
                 currency: "BRL",
             })}`,
-            col4: `R$ ${(
+            custoTotal: `R$ ${(
                 parseFloat(produto.custo) * parseFloat(produto.quantidade)
             ).toLocaleString("pt-br", {
                 style: "currency",
@@ -46,10 +49,10 @@ function Produtos() {
         };
     });
     const columns: GridColDef[] = [
-        { field: "col1", headerName: "Column 1", width: 150 },
-        { field: "col2", headerName: "Column 2", width: 150 },
-        { field: "col3", headerName: "Column 3", width: 150 },
-        { field: "col4", headerName: "Column 4", width: 150 },
+        { field: "nome", headerName: "Nome do item", width: 300 },
+        { field: "quantidade", headerName: "Quantidade", width: 150 },
+        { field: "custo", headerName: "Custo", width: 150 },
+        { field: "custoTotal", headerName: "Custo Total", width: 150 },
     ];
 
     return (
@@ -57,8 +60,8 @@ function Produtos() {
             {isLoading ? (
                 <p>Loading...</p>
             ) : (
-                <div style={{ height: 300, width: "100%" }}>
-                    <DataGrid rows={rows} columns={columns} />
+                <div style={{ height: "100vh", width: "100%" }}>
+                    <DataGrid rows={rows} columns={columns} rowHeight={30} />
                 </div>
             )}
         </div>

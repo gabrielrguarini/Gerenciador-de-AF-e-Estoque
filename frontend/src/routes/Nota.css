@@ -1,9 +1,10 @@
 .nota-container {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 20px;
-    width: 100vw;
     margin: auto;
 }
 
