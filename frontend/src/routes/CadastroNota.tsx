@@ -13,6 +13,7 @@ import {
 import { SelectChangeEvent } from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import TabelaDeProdutos from "../components/TabelaDeProdutos";
 
 import { notaInterface, produtoInterface } from "../Interfaces";
@@ -20,6 +21,8 @@ import { notaInterface, produtoInterface } from "../Interfaces";
 import { postNota } from "../services/postNota";
 
 function CadastroNota() {
+    const navigate = useNavigate();
+    const token = localStorage.getItem("token");
     const [afNumber, setAfNumber] = useState("");
     const [cidade, setCidade] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -66,11 +69,10 @@ function CadastroNota() {
         custo,
         status,
     }: produtoInterface) => {
-        const custoTotal = `${parseFloat(custo) * parseFloat(quantidade)}`;
         setprodutos([
             ...produtos,
             {
-                id: `{produtos.length}`,
+                id: `${produtos.length}`,
                 nome,
                 quantidade,
                 custo,

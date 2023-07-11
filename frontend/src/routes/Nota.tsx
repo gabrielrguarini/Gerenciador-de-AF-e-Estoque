@@ -25,26 +25,26 @@ function Nota() {
         }
         fetchData();
     }, []);
-    return (
-        nota && (
-            <div className="nota-container">
-                <header className="nota-header">
-                    <h1>Ordem de fornecimento</h1>
-                    <div className="nota-info">
-                        <p>Cidade: {nota.cidade}</p>
-                        <p>Nota: {nota.afNumber}</p>
-                    </div>
-                </header>
-                {isLoading ? (
-                    <div>Carregando...</div>
-                ) : (
-                    <TabelaNota produtos={nota.produtos} />
-                )}
-                <footer className="nota-footer">
-                    Total de: {nota.produtos.length} produtos
-                </footer>
-            </div>
-        )
+    return nota ? (
+        <div className="nota-container">
+            <header className="nota-header">
+                <h1>Ordem de fornecimento</h1>
+                <div className="nota-info">
+                    <p>Cidade: {nota.cidade}</p>
+                    <p>Nota: {nota.afNumber}</p>
+                </div>
+            </header>
+            {isLoading ? (
+                <div>Carregando...</div>
+            ) : (
+                <TabelaNota produtos={nota.produtos} />
+            )}
+            <footer className="nota-footer">
+                Total de: {nota.produtos.length} produtos
+            </footer>
+        </div>
+    ) : (
+        <h1>ERRO</h1>
     );
 }
 export default Nota;

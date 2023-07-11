@@ -9,12 +9,17 @@ function Notas() {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [notas, setNotas] = useState<notaInterface[]>([]);
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
             try {
-                const response = await axios("http://localhost:3000/notas");
+                const response = await axios("http://localhost:3000/notas", {
+                    headers: {
+                        "x-access-token": token,
+                    },
+                });
                 setNotas(response.data);
             } catch (error) {
                 console.error(error);

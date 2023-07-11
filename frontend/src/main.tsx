@@ -9,6 +9,10 @@ import Notas from "./routes/Notas";
 import Nota from "./routes/Nota";
 import ErrorPage from "./routes/ErrorPage";
 import Produtos from "./routes/Produtos";
+import Login from "./routes/Login";
+import Registro from "./routes/Registro";
+
+import { isAuth } from "./auth/isAuth";
 
 const router = createBrowserRouter([
     {
@@ -18,19 +22,27 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <CadastroNota />,
+                element: isAuth() ? <CadastroNota /> : <Login />,
+            },
+            {
+                path: "/login",
+                element: <Login />,
+            },
+            {
+                path: "/registro",
+                element: <Registro />,
             },
             {
                 path: "/notas",
-                element: <Notas />,
+                element: isAuth() ? <Notas /> : <Login />,
             },
             {
                 path: "/produtos",
-                element: <Produtos />,
+                element: isAuth() ? <Produtos /> : <Login />,
             },
             {
                 path: "notas/:notaId",
-                element: <Nota />,
+                element: isAuth() ? <Nota /> : <Login />,
             },
         ],
     },

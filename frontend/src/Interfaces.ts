@@ -13,3 +13,7 @@ export interface produtoInterface {
     notaId?: string
 }
 
+export interface loginInterface {
+    user: string;
+    password: string;
+}
