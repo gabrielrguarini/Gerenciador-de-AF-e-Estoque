@@ -21,7 +21,6 @@ import { notaInterface, produtoInterface } from "../Interfaces";
 import { postNota } from "../services/postNota";
 
 function CadastroNota() {
-    const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const [afNumber, setAfNumber] = useState("");
     const [cidade, setCidade] = useState("");

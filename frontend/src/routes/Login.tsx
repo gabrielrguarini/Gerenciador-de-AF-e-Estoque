@@ -19,6 +19,7 @@ function Login() {
             onSubmit={handleSubmit(async (data) => {
                 await postAuth(data);
                 navigate("/");
+                return Promise.resolve;
             })}
         >
             <h2>Login</h2>
