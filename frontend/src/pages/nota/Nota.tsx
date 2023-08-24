@@ -2,8 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Nota.css";
-import { notaInterface } from "../Interfaces";
-import TabelaNota from "../components/TabelaNota";
+import { notaInterface } from "../../Interfaces";
+import TabelaNota from "../../components/TabelaNota";
 
 function Nota() {
     const [nota, setNota] = useState<notaInterface | undefined>();

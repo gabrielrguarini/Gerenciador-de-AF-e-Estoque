@@ -1,28 +1,23 @@
-import axios from "axios";
-import "./Login.css";
+import "../login/Login.css";
 import { useForm } from "react-hook-form";
-import { postAuth } from "../services/postAuth";
-import { loginInterface } from "../Interfaces";
-import { useNavigate } from "react-router-dom";
+import { postRegistro } from "../../services/postRegistro";
+import { loginInterface } from "../../Interfaces";
 
-function Login() {
+function Registro() {
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<loginInterface>();
 
-    const navigate = useNavigate();
     return (
         <form
             className="login-container"
-            onSubmit={handleSubmit(async (data) => {
-                await postAuth(data);
-                navigate("/");
-                return Promise.resolve;
+            onSubmit={handleSubmit((data) => {
+                postRegistro(data);
             })}
         >
-            <h2>Login</h2>
+            <h2>Registrar</h2>
             <input
                 {...register("user", { required: true })}
                 id="user"
@@ -35,9 +30,9 @@ function Login() {
                 type="password"
                 placeholder="Password"
             />
-            <button type="submit">Login</button>
+            <button type="submit">Registrar</button>
         </form>
     );
 }
 
-export default Login;
+export default Registro;

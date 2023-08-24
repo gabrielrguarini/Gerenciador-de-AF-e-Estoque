@@ -2,18 +2,23 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
-import { produtoInterface } from "../Interfaces";
+import { produtoInterface } from "../../Interfaces";
 
 function Produtos() {
     const [isLoading, setIsLoading] = useState(false);
     const [produtos, setProdutos] = useState<produtoInterface[]>([]);
-
+    const token = localStorage.getItem("token");
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
             try {
                 const response = await axios.get(
-                    "http://localhost:3000/produtos"
+                    "http://localhost:3000/produtos",
+                    {
+                        headers: {
+                            "x-access-token": token,
+                        },
+                    }
                 );
                 setProdutos(response.data);
             } catch (error) {
