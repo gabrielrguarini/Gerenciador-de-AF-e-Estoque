@@ -27,7 +27,7 @@ app.use(express.json());
 
 app.post('/registro', async (req, res) => {
   const { user, password } = req.body
-
+  console.log("deploy")
   console.log(await postUser(user, password));
 })
 
