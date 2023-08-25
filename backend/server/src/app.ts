@@ -29,6 +29,7 @@ app.post('/registro', async (req, res) => {
   const { user, password } = req.body
   console.log("deploy")
   console.log(await postUser(user, password));
+  res.send("200")
 })
 
 app.post("/auth", async (req, res) => {
