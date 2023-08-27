@@ -52,6 +52,13 @@ function Login() {
                 placeholder="Password"
             />
             <button type="submit">Login</button>
+            <button
+                onClick={() => {
+                    navigate("/registro");
+                }}
+            >
+                Registrar
+            </button>
         </form>
     );
 }

@@ -130,7 +130,7 @@ async function getProdutos() {
 async function postUser(user, password) {
   const userInDb = await prisma.user.findFirst({
     where: {
-      user
+      user: user
     }
   })
   if (userInDb) {
@@ -139,7 +139,7 @@ async function postUser(user, password) {
   const hashedPassword = await bcrypt.hashSync(password, 8)
   const registraUsuario = await prisma.user.create({ // Cria a nota e guarda ela em uma variavel.
     data: {
-      user,
+      user: user,
       password: hashedPassword
     }
 
@@ -155,8 +155,6 @@ async function criaNota({ afNumber, cidade, produtos }: notaInterface) {
       cidade,
     }
   });
-
-
 
   for (const produto of produtos) { // Cria cada produto por vez e connecta ele com a nota.
     try {
