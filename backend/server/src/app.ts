@@ -128,6 +128,7 @@ async function getProdutos() {
 }
 
 async function postUser(user, password) {
+  console.log(user)
   const userInDb = await prisma.user.findFirst({
     where: {
       user: user
