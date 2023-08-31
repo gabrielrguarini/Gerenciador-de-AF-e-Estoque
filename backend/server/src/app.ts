@@ -27,8 +27,12 @@ app.use(express.json());
 
 app.post('/registro', async (req, res) => {
   const { user, password } = req.body
-  console.log(req)
-  console.log(await postUser(user, password));
+  try {
+    const result = await postUser(user, password);
+    res.status(201).send("Usuário criado com sucesso", result)
+  } catch {
+    res.status(500).send("Falha ao criar usuário")
+  }
   res.send("200")
 })
 
@@ -127,8 +131,7 @@ async function getProdutos() {
   }
 }
 
-async function postUser(user, password) {
-  console.log("user:", user)
+async function postUser(user: string, password: string) {
   const userInDb = await prisma.user.findFirst({
     where: {
       user: user
