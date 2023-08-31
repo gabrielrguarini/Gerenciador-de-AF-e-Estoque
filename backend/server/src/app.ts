@@ -128,12 +128,13 @@ async function getProdutos() {
 }
 
 async function postUser(user, password) {
-  console.log(user)
+  console.log("user:", user)
   const userInDb = await prisma.user.findFirst({
     where: {
       user: user
     }
   })
+  console.log("userInDb:", userInDb)
   if (userInDb) {
     return {
       message: "Usuário já cadastrado",
