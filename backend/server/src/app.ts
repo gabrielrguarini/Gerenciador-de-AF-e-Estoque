@@ -29,9 +29,12 @@ app.post('/registro', async (req, res) => {
   const { user, password } = req.body
   try {
     const result = await postUser(user, password);
-    res.status(201).send("Usuário criado com sucesso", result);
+    if (result) {
+      res.status(201).send("Usuário criado com sucesso.", result);
+    }
+    res.status(400).send("Usuário já existe.")
   } catch {
-    res.status(500).send("Falha ao criar usuário");
+    res.status(500).send("Falha ao criar usuário.");
   }
 })
 
@@ -138,10 +141,7 @@ async function postUser(user: string, password: string) {
   })
   console.log("userInDb:", userInDb)
   if (userInDb) {
-    return {
-      message: "Usuário já cadastrado",
-      id: userInDb.user
-    }
+    return false
   }
   const hashedPassword = await bcrypt.hashSync(password, 8)
   const registraUsuario = await prisma.user.create({ // Cria a nota e guarda ela em uma variavel.
