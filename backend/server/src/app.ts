@@ -29,11 +29,10 @@ app.post('/registro', async (req, res) => {
   const { user, password } = req.body
   try {
     const result = await postUser(user, password);
-    res.status(201).send("Usuário criado com sucesso", result)
+    res.status(201).send("Usuário criado com sucesso", result);
   } catch {
-    res.status(500).send("Falha ao criar usuário")
+    res.status(500).send("Falha ao criar usuário");
   }
-  res.send("200")
 })
 
 app.post("/auth", async (req, res) => {
