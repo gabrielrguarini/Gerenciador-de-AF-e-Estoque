@@ -134,7 +134,10 @@ async function postUser(user, password) {
     }
   })
   if (userInDb) {
-    return { message: "Usuário já cadastrado" }
+    return {
+      message: "Usuário já cadastrado",
+      id: userInDb.user
+    }
   }
   const hashedPassword = await bcrypt.hashSync(password, 8)
   const registraUsuario = await prisma.user.create({ // Cria a nota e guarda ela em uma variavel.
