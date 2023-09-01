@@ -134,24 +134,33 @@ async function getProdutos() {
 }
 
 async function postUser(user: string, password: string) {
-  const userInDb = await prisma.user.findFirst({
-    where: {
-      user: user
+  try {
+    const userInDb = await prisma.user.findFirst({
+      where: {
+        user: user
+      }
+    })
+    if (userInDb) {
+      return false
     }
-  })
-  console.log("userInDb:", userInDb)
-  if (userInDb) {
-    return false
+    console.log("userInDb:", userInDb)
+  } catch {
+    console.log("Erro ao consultar usuário")
   }
-  const hashedPassword = await bcrypt.hashSync(password, 8)
-  const registraUsuario = await prisma.user.create({ // Cria a nota e guarda ela em uma variavel.
-    data: {
-      user: user,
-      password: hashedPassword
-    }
+  try {
+    const hashedPassword = await bcrypt.hashSync(password, 8)
+    const registraUsuario = await prisma.user.create({
+      data: {
+        user: user,
+        password: hashedPassword
+      }
 
-  })
-  return registraUsuario
+    })
+    return registraUsuario
+  } catch
+  {
+    console.log("Erro ao cadastrar usuário")
+  }
 }
 
 
