@@ -30,7 +30,7 @@ app.post('/registro', async (req, res) => {
   try {
     const result = await postUser(user, password);
     if (result) {
-      res.status(201).send("Usuário criado com sucesso.", result);
+      res.status(201).send("Usuário criado com sucesso.");
     }
     res.status(400).send("Usuário já existe.")
   } catch {
