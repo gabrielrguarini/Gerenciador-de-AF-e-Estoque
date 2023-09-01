@@ -141,13 +141,8 @@ async function postUser(user: string, password: string) {
       }
     })
     if (userInDb) {
-      return false
+      return (false)
     }
-    console.log("userInDb:", userInDb)
-  } catch {
-    console.log("Erro ao consultar usuário")
-  }
-  try {
     const hashedPassword = await bcrypt.hashSync(password, 8)
     const registraUsuario = await prisma.user.create({
       data: {
@@ -156,11 +151,14 @@ async function postUser(user: string, password: string) {
       }
 
     })
+    console.log("userInDb:", userInDb)
     return registraUsuario
-  } catch
-  {
+  } catch {
     console.log("Erro ao cadastrar usuário")
   }
+
+  console.log("Erro ao cadastrar usuário")
+
 }
 
 
