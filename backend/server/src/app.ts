@@ -29,11 +29,16 @@ app.post('/registro', async (req, res) => {
   const { user, password } = req.body
 
   const result = await postUser(user, password);
-  if (result) {
-    res.status(201).send("Usuário cadastrado com sucesso");
-    return
+  try {
+    if (result) {
+      res.status(201).send("Usuário cadastrado com sucesso");
+      return
+    }
+    res.status(400).send("Usuário já existe.")
+
+  } catch {
+    res.status(500).send("Erro ao cadastrar usuário")
   }
-  res.status(400).send("Usuário já existe.")
 })
 
 app.post("/auth", async (req, res) => {
