@@ -27,15 +27,12 @@ app.use(express.json());
 
 app.post('/registro', async (req, res) => {
   const { user, password } = req.body
-  try {
-    const result = await postUser(user, password);
-    if (result) {
-      res.status(201).send("Usuário criado com sucesso.");
-    }
-    res.status(400).send("Usuário já existe.")
-  } catch {
-    res.status(500).send("Falha ao criar usuário.");
+
+  const result = await postUser(user, password);
+  if (result) {
+    res.status(201).send("Usuário criado com sucesso.");
   }
+  res.status(400).send("Usuário já existe.");
 })
 
 app.post("/auth", async (req, res) => {
